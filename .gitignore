@@ -1,0 +1,199 @@
+# =========================================
+# === General / OS Files ==================
+# =========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# =========================================
+# === Python / FastAPI ====================
+# =========================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+.history/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.env
+*.ini
+*.local
+*.log
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# FastAPI specific
+# Uvicorn log files
+uvicorn.log
+
+# =========================================
+# === React / Node.js (Frontend) ==========
+# =========================================
+
+# dependencies
+node_modules/
+jspm_packages/
+
+# production
+build/
+dist/
+.next/
+out/
+
+# testing
+coverage/
+*.lcov
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+.cache/
+.eslintcache
+
+# local env files
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =========================================
+# === Logs / Temp Files ===================
+# =========================================
+*.log
+*.pid
+*.pid.lock
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
+
+# =========================================
+# === Miscellaneous =======================
+# =========================================
+# TypeScript build info
+*.tsbuildinfo
+
+# Python profiling
+.prof
+*.pstats
+
+# SQLite database (optional)
+*.db
+*.sqlite3
+
+# Backup files
+*.bak
+*.old
+
+# =========================================
+# === Custom project structure ============
+# =========================================
+# Ignore local frontend build in backend repo
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+backend/__pycache__/
+backend/env/
+backend/.env
+
+# Ignore local docker / container data
+docker-compose.override.yml
+*.tar
+*.gz
+*.zip
