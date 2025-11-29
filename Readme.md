@@ -90,33 +90,37 @@ himself 2 cards (1 face up, 1 face down)
 
 ### Api endpoints
 
-1. POST /placeBet
-
+1. POST /placeBet <br>
+body:
 ```json
 {
    "bet": 100,
    "user_name": "some_dude_1923"
 }
 ```
-2. POST /hit
+2. POST /hit <br>
+body:
 ```json
 {
    "user_name": "some_dude_1923"
 }
 ```
-3. POST /stand
+3. POST /stand <br>
+body:
 ```json
 {
    "user_name": "some_dude_1923"
 }
 ```
-4. POST /nextTurn
+4. POST /nextTurn <br>
+body:
 ```json
 {
    "user_name": "some_dude_1923"
 }
 ```
-5. GET /gameState -> only after login
+5. GET /gameState <br>
+body:
 ```json
 {
    "user_name": "some_dude_1923"
