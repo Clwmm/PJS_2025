@@ -33,7 +33,7 @@ class Card:
 
 class Deck:
     """
-    Represents a standard deck of 52 playing cards.
+    Represents a standard game of 52 playing cards.
     """
     def __init__(self):
         self._cards = [
@@ -50,7 +50,7 @@ class Deck:
         return f"Deck({len(self._cards)} cards)"
 
     def __iter__(self):
-        # allows: for card in deck:
+        # allows: for card in game:
         return iter(self._cards)
 
     def shuffle(self):
@@ -58,11 +58,11 @@ class Deck:
 
     def deal_one(self):
         """
-        Deal (remove and return) one card from the top of the deck.
-        Raises IndexError if the deck is empty.
+        Deal (remove and return) one card from the top of the game.
+        Raises IndexError if the game is empty.
         """
         if not self._cards:
-            raise IndexError("Cannot deal from an empty deck")
+            raise IndexError("Cannot deal from an empty game")
         return self._cards.pop()
 
     def deal(self, n):
@@ -73,7 +73,7 @@ class Deck:
         if n < 0:
             raise ValueError("Number of cards to deal must be non-negative")
         if n > len(self._cards):
-            raise ValueError("Not enough cards left in the deck")
+            raise ValueError("Not enough cards left in the game")
         dealt = self._cards[-n:]
         self._cards = self._cards[:-n]
         return dealt
