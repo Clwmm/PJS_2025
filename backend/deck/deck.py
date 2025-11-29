@@ -41,6 +41,7 @@ class Deck:
             for suit in Card.SUITS
             for rank in Card.RANKS
         ]
+        self.shuffle()
 
     def __len__(self):
         return len(self._cards)
@@ -53,9 +54,6 @@ class Deck:
         return iter(self._cards)
 
     def shuffle(self):
-        """
-        Shuffle the deck in place.
-        """
         random.shuffle(self._cards)
 
     def deal_one(self):
@@ -81,9 +79,6 @@ class Deck:
         return dealt
 
     def reset(self):
-        """
-        Reset to a full, ordered 52-card deck.
-        """
         self.__init__()
 
 
