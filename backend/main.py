@@ -120,3 +120,29 @@ def next_turn(request: UserRequest):
     game.deck = Deck()
 
     return game.to_response()
+
+@app.post("/reset")
+def reset(request: UserRequest):
+    user_name = request.user_name
+
+    if user_name not in games:
+        return {
+            "data": {
+                "gameState": "bet",
+                "playerBalance": 1000
+            }
+        }
+
+    game = games[user_name]
+    if game.game_state not in ("bet", "end"):
+        raise HTTPException(status_code=400, detail="Cannot reset when there is an active game")
+
+    game.player_balance = 1000
+    game.game_state = "bet"
+    game.result = None
+    game.player_cards = []
+    game.dealer_cards = []
+    game.deck = Deck()
+    game.bet = 0
+
+    return game.to_response()

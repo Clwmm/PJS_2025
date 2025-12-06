@@ -36,3 +36,18 @@ jobs:
         run: bash ops/backend/build.sh
       - name: Run unit tests
         run: bash ops/backend/test.sh
+
+  functional_tests:
+    name: Functional Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Backend build
+        run: bash ops/backend/build.sh
+      - name: Run unit tests
+        run: bash ops/backend/functional_tests.sh
