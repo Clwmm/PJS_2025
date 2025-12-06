@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from game.deck.deck import Deck, Card
-from game.Game import GameState
+from backend.game.deck.deck import Deck, Card
+from backend.game.Game import GameState
 
 app = FastAPI()
 games = {}

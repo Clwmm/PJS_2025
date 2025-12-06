@@ -1,4 +1,4 @@
-from deck.deck import Card, Deck
+from backend.game.deck.deck import Card, Deck
 
 class GameState:
     def __init__(self, user_name: str, bet: int, balance: int = 1000):
