@@ -1,7 +1,11 @@
+import logging
 from backend.game.deck.deck import Card, Deck
+
+logger = logging.getLogger(__name__)
 
 class GameState:
     def __init__(self, user_name: str, bet: int, balance: int = 1000):
+        self.game_id = f"game_{user_name}_{id(self)}"
         self.user_name = user_name
         self.bet = bet
         self.player_balance = balance
@@ -9,10 +13,9 @@ class GameState:
         self.player_cards = []
         self.dealer_cards = []
         self.game_state = "bet"  # bet, pTurn, dTurn, end
-        self.result = None  # player, dealer, draw
+        self.result = None
 
     def card_to_dict(self, card: Card, hidden: bool = False):
-        """Konwertuje kartę na dict zgodnie z formatem API"""
         return {
             "value": card.rank,
             "suit": card.suit.lower(),
@@ -20,7 +23,6 @@ class GameState:
         }
 
     def calculate_hand(self, cards):
-        """Oblicza wartość ręki"""
         total = 0
         aces = 0
 
@@ -33,30 +35,26 @@ class GameState:
             else:
                 total += int(card.rank)
 
-        while total > 21 and aces > 0: # as to 1 jeśli gracz przekroczy 21
+        while total > 21 and aces > 0:
             total -= 10
             aces -= 1
 
         return total
 
     def start_game(self):
-        """Rozpocznij grę - rozdaj karty"""
         self.player_cards = self.deck.deal(2)
         self.dealer_cards = self.deck.deal(2)
         self.game_state = "pTurn"
 
-        print(f"Gra rozpoczęta! Stawka: {self.bet}")
-        print(
-            f"Gracz: {self.player_cards[0]}, {self.player_cards[1]} (wartość: {self.calculate_hand(self.player_cards)})")
-        print(f"Dealer: {self.dealer_cards[0]}, [ukryta karta]")
+        logger.info(f"[{self.game_id}] [{self.user_name}] Game started with bet: {self.bet}")
+        logger.info(f"[{self.game_id}] [{self.user_name}] Initial hand: {self.player_cards[0]}, {self.player_cards[1]} (value: {self.calculate_hand(self.player_cards)})")
+        logger.info(f"[{self.game_id}] [Dealer] Initial hand: {self.dealer_cards[0]}, [hidden card]")
 
-        # Sprawdź blackjacka gracza
         if self.calculate_hand(self.player_cards) == 21:
-            print("🎉 BLACKJACK!")
+            logger.info(f"[{self.game_id}] [{self.user_name}] BLACKJACK!")
             self.stand()
 
     def hit(self):
-        """Gracz bierze kartę"""
         if self.game_state != "pTurn":
             raise ValueError("Cannot hit - not player's turn")
 
@@ -64,60 +62,54 @@ class GameState:
         self.player_cards.append(new_card)
         hand_value = self.calculate_hand(self.player_cards)
 
-        print(f"\n📥 Dobrano kartę: {new_card}")
-        print(f"Ręka gracza: {', '.join(str(c) for c in self.player_cards)} (wartość: {hand_value})")
+        logger.info(f"[{self.game_id}] [{self.user_name}] Hit: drew {new_card}")
+        logger.info(f"[{self.game_id}] [{self.user_name}] Current hand: {', '.join(str(c) for c in self.player_cards)} (value: {hand_value})")
 
         if hand_value > 21:
-            print("💥 PRZEBICIE! Dealer wygrywa!")
+            logger.info(f"[{self.game_id}] [{self.user_name}] BUST! Dealer wins")
             self.game_state = "end"
             self.result = "dealer"
             self.player_balance -= self.bet
 
     def stand(self):
-        """Gracz kończy turę, dealer gra"""
         if self.game_state != "pTurn":
             raise ValueError("Cannot stand - not player's turn")
 
         self.game_state = "dTurn"
-        print(
-            f"\n✋ Gracz pas! Ręka dealera: {', '.join(str(c) for c in self.dealer_cards)} (wartość: {self.calculate_hand(self.dealer_cards)})")
+        logger.info(f"[{self.game_id}] [{self.user_name}] Stand - player holds at {self.calculate_hand(self.player_cards)}")
+        logger.info(f"[{self.game_id}] [Dealer] Revealed hand: {', '.join(str(c) for c in self.dealer_cards)} (value: {self.calculate_hand(self.dealer_cards)})")
 
-        # Dealer dobiera do 17
         while self.calculate_hand(self.dealer_cards) < 17:
             new_card = self.deck.deal_one()
             self.dealer_cards.append(new_card)
-            print(f"Dealer dobiera: {new_card} (wartość: {self.calculate_hand(self.dealer_cards)})")
+            logger.info(f"[{self.game_id}] [Dealer] Hit: drew {new_card} (value: {self.calculate_hand(self.dealer_cards)})")
 
-        # Ustal wynik
         player_value = self.calculate_hand(self.player_cards)
         dealer_value = self.calculate_hand(self.dealer_cards)
 
         self.game_state = "end"
 
-        print(f"\n📊 Wynik końcowy:")
-        print(f"Gracz: {player_value}")
-        print(f"Dealer: {dealer_value}")
+        logger.info(f"[{self.game_id}] Game ended - Player: {player_value}, Dealer: {dealer_value}")
 
         if dealer_value > 21:
-            print("🎉 Dealer przebił! Gracz wygrywa!")
+            logger.info(f"[{self.game_id}] [Dealer] BUST! Player wins")
             self.result = "player"
             self.player_balance += self.bet
         elif player_value > dealer_value:
-            print("🎉 Gracz wygrywa!")
+            logger.info(f"[{self.game_id}] [{self.user_name}] Win")
             self.result = "player"
             self.player_balance += self.bet
         elif dealer_value > player_value:
-            print("😞 Dealer wygrywa!")
+            logger.info(f"[{self.game_id}] [Dealer] Win")
             self.result = "dealer"
             self.player_balance -= self.bet
         else:
-            print("🤝 Remis!")
+            logger.info(f"[{self.game_id}] Draw")
             self.result = "draw"
 
-        print(f"💰 Nowy balans: {self.player_balance}")
+        logger.info(f"[{self.game_id}] [{self.user_name}] New balance: {self.player_balance}")
 
     def to_response(self):
-        """Konwertuj stan gry na format odpowiedzi API"""
         data = {"gameState": self.game_state}
 
         if self.game_state == "bet":

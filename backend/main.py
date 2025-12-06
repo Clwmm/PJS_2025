@@ -2,7 +2,15 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from backend.game.deck.deck import Deck, Card
 from backend.game.Game import GameState
+import logging
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('blackjack.log')
+    ]
+)
 app = FastAPI()
 games = {}
 
