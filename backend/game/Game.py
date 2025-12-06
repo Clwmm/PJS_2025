@@ -79,6 +79,7 @@ class GameState:
         logger.info(f"[{self.game_id}] [{self.user_name}] Stand - player holds at {self.calculate_hand(self.player_cards)}")
         logger.info(f"[{self.game_id}] [Dealer] Revealed hand: {', '.join(str(c) for c in self.dealer_cards)} (value: {self.calculate_hand(self.dealer_cards)})")
 
+        # dealer hitting with cards < 17 and stand with cards >= 17 - typical blackjack logic
         while self.calculate_hand(self.dealer_cards) < 17:
             new_card = self.deck.deal_one()
             self.dealer_cards.append(new_card)
@@ -134,6 +135,7 @@ class GameState:
                 "cards": [self.card_to_dict(card) for card in self.player_cards]
             }
             data["result"] = self.result
+            data["bet"] = self.bet
             data["playerBalance"] = self.player_balance
 
         return {"data": data}

@@ -36,7 +36,7 @@ def get_game_state(user_name: str):
         return {
             "data": {
                 "gameState": "bet",
-                "playerBalance": 1000  # domyślny balans
+                "playerBalance": 1000
             }
         }
     return games[user_name].to_response()
