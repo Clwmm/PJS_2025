@@ -26,7 +26,7 @@ class UserRequest(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, FastAPI Blackjack!"}
+    return {"message": "Hello, FastAPI Blackjack!!!"}
 
 
 @app.get("/gameState")
