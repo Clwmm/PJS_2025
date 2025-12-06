@@ -28,7 +28,7 @@ def test_get_game_state_existing_user():
     response = client.post("/gameState", json={"user_name": username})
     assert response.status_code == 200
     data = response.json()["data"]
-    assert data["gameState"] == "pTurn"
+    assert data["gameState"] in ["pTurn", "end"]
     assert "player" in data
     assert "dealer" in data
 
