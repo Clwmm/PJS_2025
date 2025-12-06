@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-PORT="${1:-8000}"
-
 if [[ "$OSTYPE" == "msys" ]]; then
     VENV_ACTIVATE="backend/.venv/Scripts/activate"
 else
@@ -17,5 +15,5 @@ fi
 echo "=== Aktywacja środowiska ==="
 source "$VENV_ACTIVATE"
 
-echo "=== Uruchamianie aplikacji na porcie $PORT ==="
-uvicorn backend.main:app --host 0.0.0.0 --port "$PORT"
+echo "=== Uruchamianie aplikacji ==="
+uvicorn backend.main:app --reload
