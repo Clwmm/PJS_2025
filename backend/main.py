@@ -29,9 +29,10 @@ def read_root():
     return {"message": "Hello, FastAPI Blackjack!!!"}
 
 
-@app.get("/gameState")
-def get_game_state(user_name: str):
+@app.post("/gameState")
+def get_game_state(request: UserRequest):
     """Pobierz stan gry dla danego użytkownika"""
+    user_name = request.user_name
     if user_name not in games:
         return {
             "data": {
