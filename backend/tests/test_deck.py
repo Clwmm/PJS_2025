@@ -94,7 +94,7 @@ class TestDeck(unittest.TestCase):
         deck = Deck()
         deck.deal(10)
         deck.reset()
-        self.assertEqual(len(deck), 522)
+        self.assertEqual(len(deck), 52)
 
     def test_iterable(self):
         deck = Deck()
