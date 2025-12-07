@@ -2,13 +2,15 @@
 
 ## BACKEND
 1. Build
-```./opt/backend/build.sh```
-2. Run
-```./opt/backend/run.sh```
+```./ops/backend/build.sh```
+2. Run debug
+```./ops/backend/run_debug.sh```
 
 ## FRONTEND
-
-
+1. Build
+```./ops/frontend/build.sh```
+2. Run debug
+```./ops/frontend/run_debug.sh```
 
 ## Game States
 At home page user puts his nickname. 
