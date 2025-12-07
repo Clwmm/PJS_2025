@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Login from "./components/Login";
+import BetScreen from "./components/BetScreen";
+import GameScreen from "./components/GameScreen";
+import EndScreen from "./components/EndScreen";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [userName, setUserName] = useState("");
+    const [gameData, setGameData] = useState(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    if (!userName) {
+        return <Login onLogin={(name, data) => { setUserName(name); setGameData(data); }} />;
+    }
+
+    if (!gameData) return <div>Loading...</div>;
+
+    const state = gameData.gameState;
+
+    switch (state) {
+        case "bet":
+            return <BetScreen userName={userName} gameData={gameData} setGameData={setGameData} />;
+        case "pTurn":
+            return <GameScreen userName={userName} gameData={gameData} setGameData={setGameData} />;
+        case "end":
+            return <EndScreen userName={userName} gameData={gameData} setGameData={setGameData} />;
+        default:
+            return <div>Unknown state</div>;
+    }
 }
 
-export default App
+export default App;

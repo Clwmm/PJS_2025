@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from backend.game.deck.deck import Deck, Card
 from backend.game.Game import GameState
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 logging.basicConfig(
@@ -12,6 +13,15 @@ logging.basicConfig(
     ]
 )
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or ["http://localhost:5173"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 games = {}
 
 
