@@ -11,18 +11,28 @@ export default function Login({ onLogin }) {
     };
 
     return (
-        <div style={{ padding: 20 }}>
-            <h2>Enter your name:</h2>
+        <div className="login-wrapper">
+            <div className="login-container">
+                <div className="login-icon">
+                    <img src="/casino-icon.svg" alt="Casino" />
+                </div>
+                <h1 className="login-title">BLACKJACK</h1>
+                <h2 className="login-subtitle">Enter your name:</h2>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <button type="submit">Start</button>
-            </form>
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <input
+                        className="login-input"
+                        type="text"
+                        placeholder="Enter your name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        autoFocus
+                    />
+                    <button className="login-button" type="submit">
+                        Start Game
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }
