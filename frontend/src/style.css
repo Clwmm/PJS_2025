@@ -155,41 +155,109 @@
     }
 }
 
-.cards-row {
-    display: flex;
-    gap: 10px;
-}
-
 .card {
-    border: 1px solid black;
-    padding: 10px;
-    width: 50px;
-    text-align: center;
+    border: 1px solid #1a1a1a;
+    padding: 0;
+    width: 60px;
+    height: 85px;
     background: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.card.back {
-    background: gray;
+.card-corner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.7rem;
+    line-height: 1;
+    padding: 4px 6px;
 }
 
-.bet-balance {
+.card-corner-top {
+    align-self: flex-start;
+}
+
+.card-corner-bottom {
+    align-self: flex-end;
+    transform: rotate(180deg);
+}
+
+.card-value {
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 1px;
+}
+
+.card-suit-small {
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.card-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-suit-large {
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.card-red {
+    color: darkred;
+}
+
+.card-black {
+    color: #1a1a1a;
+}
+
+.card-back {
+    background: #2a2a2a;
+    border-color: darkgoldenrod;
+    color: darkgoldenrod;
+    font-size: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box {
     text-align: center;
-    margin-bottom: 2rem;
     padding: 1rem;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 8px;
     border: 1px solid dimgray;
 }
 
-.bet-balance-label {
+.bet-wrapper .info-box {
+    margin-bottom: 2rem;
+}
+
+.info-label {
     color: lightgray;
+}
+
+.bet-wrapper .info-label {
     margin-right: 0.5rem;
 }
 
-.bet-balance-value {
+.info-value {
     color: darkgoldenrod;
-    font-size: 1.5rem;
     font-weight: bold;
+}
+
+.bet-wrapper .info-value {
+    font-size: 1.5rem;
 }
 
 .bet-input-wrapper {
@@ -239,5 +307,109 @@
 
 .bet-spinner-down::after {
     border-top: 7px solid darkgoldenrod;
+}
+
+.game-wrapper,
+.end-wrapper {
+    background: black url('/bet_background.webp') center/cover no-repeat;
+}
+
+.game-wrapper .panel-container,
+.end-wrapper .panel-container {
+    padding: 2rem;
+    max-width: 500px;
+}
+
+.game-section {
+    margin-bottom: 1.25rem;
+}
+
+.game-section-title {
+    color: darkgoldenrod;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.game-cards {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.game-actions .panel-button {
+    flex: 1;
+}
+
+.end-result {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.end-result-win {
+    color: limegreen;
+}
+
+.end-result-lose {
+    color: firebrick;
+}
+
+.end-result-draw {
+    color: lightgray;
+}
+
+.end-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.end-info .info-box {
+    flex: 1;
+    padding: 0.6rem;
+}
+
+.end-info .info-label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.end-info .info-value {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .game-wrapper .panel-container,
+    .end-wrapper .panel-container {
+        padding: 1.5rem;
+    }
+
+    .game-actions {
+        flex-direction: column;
+    }
+
+    .game-cards {
+        gap: 8px;
+    }
+
+    .end-info {
+        flex-direction: column;
+    }
+
+    .end-result {
+        font-size: 1.2rem;
+    }
 }
 

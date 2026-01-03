@@ -18,9 +18,9 @@ export default function BetScreen({ userName, gameData, setGameData }) {
                 <h1 className="panel-title">BLACKJACK</h1>
                 <h2 className="panel-subtitle">Place your bet</h2>
                 
-                <div className="bet-balance">
-                    <span className="bet-balance-label">Balance:</span>
-                    <span className="bet-balance-value">{gameData.playerBalance}</span>
+                <div className="info-box">
+                    <span className="info-label">Balance:</span>
+                    <span className="info-value">{gameData.playerBalance}</span>
                 </div>
 
                 <form className="panel-form" onSubmit={(e) => { e.preventDefault(); placeBet(); }}>
