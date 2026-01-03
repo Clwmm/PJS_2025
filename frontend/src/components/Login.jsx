@@ -11,24 +11,24 @@ export default function Login({ onLogin }) {
     };
 
     return (
-        <div className="login-wrapper">
-            <div className="login-container">
+        <div className="panel-wrapper login-wrapper">
+            <div className="panel-container">
                 <div className="login-icon">
-                    <img src="/casino-icon.svg" alt="Casino" />
+                    <img src="/casino-icon.svg" />
                 </div>
-                <h1 className="login-title">BLACKJACK</h1>
-                <h2 className="login-subtitle">Enter your name:</h2>
+                <h1 className="panel-title">BLACKJACK</h1>
+                <h2 className="panel-subtitle">Enter your name:</h2>
 
-                <form className="login-form" onSubmit={handleSubmit}>
+                <form className="panel-form" onSubmit={handleSubmit}>
                     <input
-                        className="login-input"
+                        className="panel-input"
                         type="text"
                         placeholder="Enter your name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         autoFocus
                     />
-                    <button className="login-button" type="submit">
+                    <button className="panel-button" type="submit">
                         Start Game
                     </button>
                 </form>

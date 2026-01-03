@@ -4,27 +4,33 @@
     box-sizing: border-box;
 }
 
-.login-wrapper {
+.panel-wrapper {
     width: 100%;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: black url('/background_5.png') center/cover no-repeat;
     font-family: sans-serif;
     position: relative;
 }
 
-.login-wrapper::after {
+.login-wrapper {
+    background: black url('/login_background.png') center/cover no-repeat;
+}
+
+.bet-wrapper {
+    background: black url('/bet_background.webp') center/cover no-repeat;
+}
+
+.panel-wrapper::after {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.7);
     pointer-events: none;
-    z-index: 0;
 }
 
-.login-container {
+.panel-container {
     background: #1a1a1a;
     padding: 3rem 2.5rem;
     border-radius: 8px;
@@ -36,16 +42,7 @@
     z-index: 1;
 }
 
-.login-icon,
-.login-title,
-.login-subtitle,
-.login-form {
-    position: relative;
-    z-index: 2;
-}
-
 .login-icon {
-    text-align: center;
     margin-bottom: 1.5rem;
     animation: pulse 3s ease-in-out infinite;
     display: flex;
@@ -63,7 +60,7 @@
     50% { transform: scale(1.1); opacity: 0.9; }
 }
 
-.login-title {
+.panel-title {
     text-align: center;
     font-size: 2.2rem;
     font-weight: 700;
@@ -71,20 +68,20 @@
     margin-bottom: 0.5rem;
 }
 
-.login-subtitle {
+.panel-subtitle {
     text-align: center;
     font-size: 1.1rem;
     margin-bottom: 2rem;
     color: lightgray;
 }
 
-.login-form {
+.panel-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.login-input {
+.panel-input {
     width: 100%;
     padding: 1rem 1.25rem;
     font-size: 1rem;
@@ -95,16 +92,27 @@
     outline: none;
 }
 
-.login-input:focus {
+.panel-input:focus {
     border-color: darkgoldenrod;
     outline: 2px solid darkgoldenrod;
+    outline-offset: 0;
 }
 
-.login-input::placeholder {
+.panel-input::placeholder {
     color: dimgray;
 }
 
-.login-button {
+.bet-input {
+    padding-right: 2.5rem;
+    appearance: textfield;
+}
+
+.bet-input::-webkit-inner-spin-button,
+.bet-input::-webkit-outer-spin-button {
+    appearance: none;
+}
+
+.panel-button {
     width: 100%;
     padding: 1rem 2rem;
     font-size: 1.1rem;
@@ -118,30 +126,30 @@
     letter-spacing: 1px;
 }
 
-.login-button:hover {
+.panel-button:hover {
     background: #c8962f;
 }
 
-.login-button:focus {
+.panel-button:focus {
     outline: 2px solid darkgoldenrod;
 }
 
 @media (max-width: 768px) {
-    .login-container {
+    .panel-container {
         padding: 2rem 1.5rem;
         margin: 1rem;
         max-width: 100%;
     }
 
-    .login-title {
+    .panel-title {
         font-size: 1.8rem;
     }
 
-    .login-subtitle {
+    .panel-subtitle {
         font-size: 1rem;
     }
 
-    .login-button {
+    .panel-button {
         padding: 0.9rem 1.5rem;
         font-size: 1rem;
     }
@@ -163,3 +171,73 @@
 .card.back {
     background: gray;
 }
+
+.bet-balance {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid dimgray;
+}
+
+.bet-balance-label {
+    color: lightgray;
+    margin-right: 0.5rem;
+}
+
+.bet-balance-value {
+    color: darkgoldenrod;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.bet-input-wrapper {
+    position: relative;
+}
+
+.bet-input-spinner {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bet-spinner-button {
+    width: 20px;
+    height: 14px;
+    background: black;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+}
+
+.bet-spinner-button:hover {
+    background: #333;
+}
+
+.bet-spinner-up::after,
+.bet-spinner-down::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+}
+
+.bet-spinner-up::after {
+    border-bottom: 7px solid darkgoldenrod;
+}
+
+.bet-spinner-down::after {
+    border-top: 7px solid darkgoldenrod;
+}
+
