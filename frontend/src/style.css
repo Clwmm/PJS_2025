@@ -413,3 +413,15 @@
     }
 }
 
+.gameover-title {
+    color: firebrick;
+    font-weight: bold;
+}
+
+.gameover-text {
+    text-align: center;
+    color: lightgray;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+

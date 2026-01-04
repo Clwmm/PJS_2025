@@ -1,6 +1,11 @@
 import Card from "./Card";
+import GameOverScreen from "./GameOverScreen";
 
 export default function EndScreen({ userName, gameData, setGameData }) {
+    //no money = game over screen
+    if (gameData.playerBalance === 0) {
+        return <GameOverScreen userName={userName} setGameData={setGameData} />;
+    }
     const playAgain = () => {
         setGameData({
             gameState: "bet",
