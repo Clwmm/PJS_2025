@@ -4,3 +4,4 @@ uvicorn[standard]
 python-dotenv
 pytest
 httpx>=0.24.1
+pytest-cov

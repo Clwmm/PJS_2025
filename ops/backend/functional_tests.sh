@@ -19,4 +19,4 @@ echo "=== Ustawienie PYTHONPATH ==="
 export PYTHONPATH="$PYTHONPATH:$(pwd)/backend"
 
 echo "=== Uruchamianie testów funkcjonalnych API ==="
-pytest backend/tests/functional_tests.py -v
+pytest backend/tests/test_functional.py -v
