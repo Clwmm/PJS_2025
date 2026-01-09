@@ -131,3 +131,126 @@ def test_stand_valid():
         response = client.post("/stand", json={"user_name": username})
         assert response.status_code == 200
         assert response.json()["data"]["gameState"] == "end"
+
+
+def test_stand_changes_state_to_end():
+    username = "stand_logic_user"
+    reset_user(username)
+
+    client.post("/placeBet", json={"user_name": username, "bet": 100})
+
+    response = client.post("/gameState", json={"user_name": username})
+    current_state = response.json()["data"]["gameState"]
+
+    if current_state == "pTurn":
+        response = client.post("/stand", json={"user_name": username})
+        assert response.status_code == 200
+        data = response.json()["data"]
+
+        assert data["gameState"] == "end"
+        assert "result" in data
+
+        assert data["dealer"]["cards"][1]["hidden"] is False
+
+
+def test_stand_when_not_turn():
+    """Próba wykonania stand, gdy gra się jeszcze nie zaczęła"""
+    username = "premature_stand_user"
+    reset_user(username)
+
+    response = client.post("/stand", json={"user_name": username})
+    assert response.status_code == 400
+
+
+# NEXT TURN TESTS -> /nextTurn
+
+def test_next_turn_resets_game_state():
+    username = "next_turn_user"
+    reset_user(username)
+
+    client.post("/placeBet", json={"user_name": username, "bet": 100})
+
+    response = client.post("/nextTurn", json={"user_name": username})
+    assert response.status_code == 200
+    data = response.json()["data"]
+
+    assert data["gameState"] == "bet"
+    assert isinstance(data["playerBalance"], int)
+
+
+def test_next_turn_preserves_balance():
+    username = "balance_keeper"
+    reset_user(username)
+
+    client.post("/placeBet", json={"user_name": username, "bet": 100})
+
+    response = client.post("/nextTurn", json={"user_name": username})
+    data = response.json()["data"]
+
+    assert data["playerBalance"] == 900
+
+
+# RESET TESTS -> /reset
+
+def test_reset_restores_balance():
+    username = "reset_test_user"
+    reset_user(username)
+
+    client.post("/placeBet", json={"user_name": username, "bet": 500})
+
+    response = client.post("/reset", json={"user_name": username})
+    assert response.status_code == 200
+    data = response.json()["data"]
+
+    assert data["gameState"] == "bet"
+    assert data["playerBalance"] == 1000
+
+
+# WHOLE FLOW TEST
+
+def test_full_game_flow():
+    """
+    Symulacja pełnego cyklu życia gracza:
+    1. Wejście do gry
+    2. Postawienie zakładu
+    3. Dobranie karty (Hit)
+    4. Pasowanie (Stand)
+    5. Sprawdzenie wyniku
+    6. Nowa tura
+    """
+    username = "flow_master"
+    reset_user(username)
+
+    r1 = client.post("/gameState", json={"user_name": username})
+    assert r1.json()["data"]["gameState"] == "bet"
+    initial_balance = r1.json()["data"]["playerBalance"]
+
+    bet_amount = 200
+    r2 = client.post("/placeBet", json={"user_name": username, "bet": bet_amount})
+    assert r2.status_code == 200
+    state_after_bet = r2.json()["data"]["gameState"]
+
+    if state_after_bet == "pTurn":
+        r3 = client.post("/hit", json={"user_name": username})
+        assert r3.status_code == 200
+        state_after_hit = r3.json()["data"]["gameState"]
+
+        if state_after_hit == "pTurn":
+            r4 = client.post("/stand", json={"user_name": username})
+            assert r4.status_code == 200
+            final_data = r4.json()["data"]
+            assert final_data["gameState"] == "end"
+            assert final_data["result"] in ["player", "dealer", "draw"]
+        else:
+            assert state_after_hit == "end"
+            assert r3.json()["data"]["result"] == "dealer"
+
+    elif state_after_bet == "end":
+        assert r2.json()["data"]["result"] == "player"
+
+    r5 = client.post("/nextTurn", json={"user_name": username})
+    assert r5.status_code == 200
+    new_game_data = r5.json()["data"]
+
+    assert new_game_data["gameState"] == "bet"
+    assert new_game_data["playerBalance"] is not None
