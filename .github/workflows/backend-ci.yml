@@ -51,6 +51,8 @@ jobs:
         run: bash ops/backend/build.sh
       - name: Run unit tests
         run: bash ops/backend/test.sh
+      - name: Check test coverage
+        run: bash ops/backend/coverage.sh
 
   functional_tests:
     name: Functional Tests
