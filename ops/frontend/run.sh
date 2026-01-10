@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Default port = 4173, or user can pass first argument: ./run.sh 5000
+PORT="${1:-4173}"
+
 FRONTEND_DIR="frontend"
 DIST_DIR="$FRONTEND_DIR/dist"
 
@@ -16,4 +19,4 @@ echo "=== Running frontend on production server ==="
 cd "$DIST_DIR"
 
 # Serve static files on port 4173
-serve . -l 4173
+serve . -l "$PORT"
